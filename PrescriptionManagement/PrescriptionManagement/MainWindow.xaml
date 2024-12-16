@@ -7,6 +7,36 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Background="#4B5945">
+            <TextBlock Grid.Row="0" Text="Dr.Appukuttans Clinic" Margin="10" FontSize="16" FontWeight="ExtraBold" Foreground="#E7FBE6"></TextBlock>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Background="Aquamarine">
+                <StackPanel Grid.Column="0" Background="#91AC8F" >
+                    <TextBlock Text="Name"></TextBlock>
+                    <TextBox></TextBox>
+                    <TextBlock Text="Age"></TextBlock>
+                    <TextBox></TextBox>
+                    <TextBlock Text="Gender"></TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Male"></RadioButton>
+                        <RadioButton Content="Female" Margin="5,0"></RadioButton>
+                    </StackPanel>
+                    <DatePicker></DatePicker>
+                    <Button Content="Add"></Button>
+                </StackPanel>
+            </Border>
+            <StackPanel Grid.Column="1" Background="#B2C9AD">
+
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
