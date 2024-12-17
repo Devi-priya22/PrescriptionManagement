@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PrescriptionManagement.Services;
 
 namespace PrescriptionManagement
 {
@@ -23,6 +24,7 @@ namespace PrescriptionManagement
         public MainWindow()
         {
             InitializeComponent();
+            new DatabasesManager();
         }
     }
 }

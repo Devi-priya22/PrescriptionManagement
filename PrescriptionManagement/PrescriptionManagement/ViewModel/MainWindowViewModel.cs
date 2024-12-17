@@ -6,13 +6,65 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using PrescriptionManagement.Commands;
+using PrescriptionManagement.Model;
+using System.Collections.ObjectModel;
+using PrescriptionManagement.Services;
 
 namespace PrescriptionManagement.ViewModel
 {
     internal class MainWindowViewModel:ViewModelBase, IDataErrorInfo
     {
-		private string _name;
+        private readonly List<Patient> _patients;
+        public ObservableCollection<Patient> Patients { get; set; }
+        public RelayCommand AddCommand { get; set; }
 
+		public RelayCommand DeleteCommand { get; set; }
+		private readonly DatabasesManager _dbManager;
+		public MainWindowViewModel() 
+		{
+			AddCommand = new RelayCommand(AddFunction);
+			DeleteCommand = new RelayCommand(DeleteFunction);
+			_dbManager = new DatabasesManager();
+			Patients = new ObservableCollection<Patient>();
+			LoadPatients();
+			
+		}
+
+		private void AddFunction()
+		{
+			var patient = new Patient()
+			{
+				Name = Name,
+				Age = Age,
+				Gender = Gender,
+				Date = Date
+			};
+            _dbManager.AddPatient(patient);
+			Patients.Add(patient);
+
+			Name=string.Empty;
+			Age = default;
+			Gender=string.Empty;
+			Date= default;
+		}
+		private void LoadPatients()
+		{
+			var patientFromDb = _dbManager.GetAllPatients();
+			foreach (var patient in patientFromDb)
+			{
+				Patients.Add(patient);
+			}
+		}
+
+		private void DeleteFunction()
+		{
+
+		}
+
+
+		private string _name;
+		[Required(ErrorMessage ="Name cannot be null")]
 		public string Name
 		{
 			get { return _name; }
@@ -24,8 +76,8 @@ namespace PrescriptionManagement.ViewModel
 
 		private int _age;
 
-		[Required]
-        [Range(1, 18, ErrorMessage = "It's not a child. Prefer another doctor if you are a pediatrician.")]
+		[Required (ErrorMessage ="Age could not be null")]
+        [Range(1, 18, ErrorMessage = "It's not a child. Prefer another doctor.")]
         public int Age
         {
             get { return _age; }
