@@ -23,6 +23,8 @@
                     </Image.OpacityMask>
                 </Image>
                 <TextBlock Grid.Row="0" Text="Dr.Appukuttans Clinic" Margin="10" FontSize="16" FontWeight="ExtraBold" Foreground="#E7FBE6"></TextBlock>
+                <TextBox Width="250" Height="20" Margin="20,0"></TextBox>
+                <Button Content="Search" Height="20" Width="50" Command="{Binding SearchCommand}"></Button>
             </StackPanel>
         </Border>
         <Grid Grid.Row="1">
@@ -33,9 +35,18 @@
             <Border Background="#597445">
                 <StackPanel Grid.Column="0" Background="#91AC8F" Margin="5">
                     <TextBlock Text="Name" Margin="5"></TextBlock>
-                    <TextBox Text="{Binding Name}" Width="200" HorizontalAlignment="Left" Margin="5,0"></TextBox>
-                    <TextBlock Text="Age"  Margin="5"></TextBlock>
-                    <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat='{}{0;#;#;}'}"  Width="200" HorizontalAlignment="Left" Margin="5,0">
+                    <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="200" HorizontalAlignment="Left" Margin="5,0">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <StackPanel>
+                                    <AdornedElementPlaceholder></AdornedElementPlaceholder>
+                                    <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"></TextBlock>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                    </TextBox>
+                    <TextBlock Text="Age" Margin="5,15,0,0"></TextBlock>
+                    <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  Width="200" HorizontalAlignment="Left" Margin="5,0">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <StackPanel>
@@ -47,15 +58,24 @@
                     </TextBox>
                     <TextBlock Text="Gender" Margin="5,15,0,0"></TextBlock>
                     <StackPanel Orientation="Horizontal" Margin="5">
-                        <RadioButton Content="Male"></RadioButton>
-                        <RadioButton Content="Female" Margin="5,0"></RadioButton>
+                        <RadioButton Content="Male" GroupName="GenderGroup" IsChecked="{Binding IsMale, Mode=TwoWay}"></RadioButton>
+                        <RadioButton Content="Female" GroupName="GenderGroup" IsChecked="{Binding IsFemale, Mode=TwoWay}" Margin="5,0"></RadioButton>
                     </StackPanel>
-                    <DatePicker Margin="5,0"></DatePicker>
-                    <Button Content="Add" Style="{StaticResource AddButton}"></Button>
+                    <DatePicker Margin="5,0" SelectedDate="{Binding Date, Mode=TwoWay}"></DatePicker>
+                    <Button Content="Add" Style="{StaticResource AddButton}" Command="{Binding AddCommand}"></Button>
                 </StackPanel>
             </Border>
             <StackPanel Grid.Column="1" Background="#B2C9AD">
-
+                <TextBlock Text="Patient Records" FontSize="16" FontWeight="DemiBold" TextAlignment="Center"></TextBlock>
+                <DataGrid ItemsSource="{Binding Patients}" AutoGenerateColumns="False"  Margin="5" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Age" Binding="{Binding Age}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Gender" Binding="{Binding Gender}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Date" Binding="{Binding Date}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
         </Grid>
     </Grid>

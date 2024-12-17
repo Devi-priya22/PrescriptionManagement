@@ -19,6 +19,7 @@ namespace PrescriptionManagement.Services
         {
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             _dbFilePath = Path.Combine(appData, "pms", _dbFile);
+            Directory.CreateDirectory(Path.Combine(appData, "pms"));
             _connStr = $"Data Source={_dbFilePath};";
 
 
@@ -31,7 +32,7 @@ namespace PrescriptionManagement.Services
                         Name TEXT NOT NULL,
                         Age INTEGER NOT NULL,
                         Gender TEXT,
-                        Date TEXT NOT NULL
+                        Date DATE
                     )";
                 using (var cmd = new SQLiteCommand(createTableQuery, conn))
                 {
@@ -53,7 +54,7 @@ namespace PrescriptionManagement.Services
                     {
                         cmd.Parameters.AddWithValue("@Name", patient.Name);
                         cmd.Parameters.AddWithValue("@Age", patient.Age);
-                        cmd.Parameters.AddWithValue("@Weight", patient.Gender);
+                        cmd.Parameters.AddWithValue("@Gender", patient.Gender);
                         cmd.Parameters.AddWithValue("@Date", patient.Date.ToString("yyyy-MM-dd"));
                         cmd.ExecuteNonQuery();
                     }
