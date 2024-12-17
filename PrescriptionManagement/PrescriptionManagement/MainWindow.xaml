@@ -19,10 +19,10 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Border Background="Aquamarine">
-                <StackPanel Grid.Column="0" Background="#91AC8F" >
-                    <TextBlock Text="Name"></TextBlock>
-                    <TextBox></TextBox>
+            <Border Background="#00712D">
+                <StackPanel Grid.Column="0" Background="#91AC8F" Margin="5" >
+                    <TextBlock Text="Name" Margin="10,5"></TextBlock>
+                    <TextBox Margin="10,0" Width="200" HorizontalAlignment="Left"></TextBox>
                     <TextBlock Text="Age"></TextBlock>
                     <TextBox></TextBox>
                     <TextBlock Text="Gender"></TextBlock>
@@ -31,7 +31,7 @@
                         <RadioButton Content="Female" Margin="5,0"></RadioButton>
                     </StackPanel>
                     <DatePicker></DatePicker>
-                    <Button Content="Add"></Button>
+                    <Button Content="Add" Style="{StaticResource AddButton}"></Button>
                 </StackPanel>
             </Border>
             <StackPanel Grid.Column="1" Background="#B2C9AD">
