@@ -27,7 +27,7 @@ namespace PrescriptionManagement.ViewModel
 			DeleteCommand = new RelayCommand(DeleteFunction);
 			_dbManager = new DatabasesManager();
 			Patients = new ObservableCollection<Patient>();
-			LoadPatients();
+			LoadPatients();   
 			
 		}
 
