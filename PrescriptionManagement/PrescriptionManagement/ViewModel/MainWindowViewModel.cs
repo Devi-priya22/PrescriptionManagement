@@ -10,6 +10,7 @@ using PrescriptionManagement.Commands;
 using PrescriptionManagement.Model;
 using System.Collections.ObjectModel;
 using PrescriptionManagement.Services;
+using System.Windows;
 
 namespace PrescriptionManagement.ViewModel
 {
@@ -46,7 +47,9 @@ namespace PrescriptionManagement.ViewModel
 			Name=string.Empty;
 			Age = default;
 			Gender=string.Empty;
-			Date= default;
+			IsMale = false;
+			IsFemale = false;
+			Date= DateTime.Now;
 		}
 		private void LoadPatients()
 		{
@@ -83,11 +86,12 @@ namespace PrescriptionManagement.ViewModel
             get { return _age; }
             set
             {
-                if (_age != value)
+                if (value <=18 && value>0)
                 {
                     _age = value;
                     OnPropertyChanged();
                 }
+				
             }
         }
 
@@ -100,6 +104,26 @@ namespace PrescriptionManagement.ViewModel
 				OnPropertyChanged();
 			}
 		}
+		public bool IsMale
+		{
+			get => Gender == "Male";
+			set
+			{
+				if (value) Gender = "Male";
+				OnPropertyChanged();
+
+			}
+		}
+		public bool IsFemale
+		{
+            get => Gender == "Female";
+            set
+            {
+                if (value) Gender = "Female";
+                OnPropertyChanged();
+
+            }
+        }
 
 		private DateTime _date;
 
