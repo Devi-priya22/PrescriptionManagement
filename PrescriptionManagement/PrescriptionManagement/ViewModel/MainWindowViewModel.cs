@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 
 namespace PrescriptionManagement.ViewModel
 {
-    internal class MainWindowViewModel:ViewModelBase,IDataErrorInfo
+    internal class MainWindowViewModel:ViewModelBase, IDataErrorInfo
     {
 		private string _name;
 
@@ -23,16 +23,23 @@ namespace PrescriptionManagement.ViewModel
 
 
 		private int _age;
-		[Range(10,20)]
-		public int age
-		{
-			get { return _age; }
-			set { _age = value;
-				OnPropertyChanged();
-			}
-		}
 
-		private string _gender;
+		[Required]
+        [Range(1, 18, ErrorMessage = "It's not a child. Prefer another doctor if you are a pediatrician.")]
+        public int Age
+        {
+            get { return _age; }
+            set
+            {
+                if (_age != value)
+                {
+                    _age = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _gender;
 
 		public string Gender
 		{
@@ -62,10 +69,10 @@ namespace PrescriptionManagement.ViewModel
 			}
 		}
 
-        public string Error { get; }
+		public string Error { get; } = "Errors";
 
         public string this[string columnName]
-		{
+        {
             get
             {
                 var context = new ValidationContext(this) { MemberName = columnName };
@@ -76,5 +83,5 @@ namespace PrescriptionManagement.ViewModel
                 return isValid ? null : results.First().ErrorMessage;
             }
         }
-	}
+    }
 }
