@@ -20,19 +20,56 @@ namespace PrescriptionManagement.ViewModel
         public ObservableCollection<Patient> Patients { get; set; }
         public RelayCommand AddCommand { get; set; }
 
-		public RelayCommand DeleteCommand { get; set; }
+        public RelayCommand SearchCommand { get; set; }
+
+
+        public RelayCommand DeleteCommand { get; set; }
 		private readonly DatabasesManager _dbManager;
 		public MainWindowViewModel() 
 		{
 			AddCommand = new RelayCommand(AddFunction);
-			DeleteCommand = new RelayCommand(DeleteFunction);
-			_dbManager = new DatabasesManager();
+			DeleteCommand = new RelayCommand(DeleteFunction, CanDeletePatient);
+            SearchCommand = new RelayCommand(SearchFunction,CanSearchExecute);
+
+            _dbManager = new DatabasesManager();
 			Patients = new ObservableCollection<Patient>();
 			LoadPatients();
 			
 		}
 
-		private void AddFunction()
+        private bool CanDeletePatient()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SearchFunction()
+		{
+			Patients.Clear();
+			if (!string.IsNullOrWhiteSpace(Search))
+			{
+				var filteredPatients = _dbManager.GetAllPatients()
+					.Where(p => p.Name.Contains(Search))
+					.ToList();
+
+				foreach (var patient in filteredPatients)
+				{
+					Patients.Add(patient);
+				}
+			}
+			else
+			{
+				LoadPatients() ;
+			}
+		}
+
+		private bool CanSearchExecute()
+		{
+			return !string.IsNullOrWhiteSpace(Search);
+		}
+
+
+
+        private void AddFunction()
 		{
 			var patient = new Patient()
 			{
@@ -62,7 +99,10 @@ namespace PrescriptionManagement.ViewModel
 
 		private void DeleteFunction()
 		{
+			if (SelectedPatient != null)
+			{
 
+			}
 		}
 
 
@@ -142,8 +182,23 @@ namespace PrescriptionManagement.ViewModel
 			get { return _search; }
 			set { _search = value;
 				OnPropertyChanged();
+				SearchCommand.OnCanExecute();
 			}
 		}
+
+		private Patient _selectedPatient;
+
+		public Patient SelectedPatient
+
+		{
+			get { return _selectedPatient; }
+			set
+			{ 
+				_selectedPatient = value;
+				OnPropertyChanged();
+			}
+		}
+
 
 		public string Error { get; } = "Errors";
 

@@ -23,8 +23,9 @@
                     </Image.OpacityMask>
                 </Image>
                 <TextBlock Grid.Row="0" Text="Dr.Appukuttans Clinic" Margin="10" FontSize="16" FontWeight="ExtraBold" Foreground="#E7FBE6"></TextBlock>
-                <TextBox Width="250" Height="20" Margin="20,0"></TextBox>
+                <TextBox Width="250" Height="20" Margin="20,0" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <Button Content="Search" Height="20" Width="50" Command="{Binding SearchCommand}"></Button>
+                <Button Content="Delete" Height="20" Width="50" Margin="5,0"></Button>
             </StackPanel>
         </Border>
         <Grid Grid.Row="1">
@@ -67,13 +68,13 @@
             </Border>
             <StackPanel Grid.Column="1" Background="#B2C9AD">
                 <TextBlock Text="Patient Records" FontSize="16" FontWeight="DemiBold" TextAlignment="Center"></TextBlock>
-                <DataGrid ItemsSource="{Binding Patients}" AutoGenerateColumns="False"  Margin="5" >
+                <DataGrid ItemsSource="{Binding Patients}" AutoGenerateColumns="False" CanUserResizeColumns="False" >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Id}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Age" Binding="{Binding Age}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Gender" Binding="{Binding Gender}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Date" Binding="{Binding Date}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Age" Binding="{Binding Age}"/>
+                        <DataGridTextColumn Header="Gender" Binding="{Binding Gender}"/>
+                        <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
