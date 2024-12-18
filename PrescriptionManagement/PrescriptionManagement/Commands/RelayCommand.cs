@@ -31,8 +31,8 @@ namespace PrescriptionManagement.Commands
 
         }
 
-        public event EventHandler CanExecuteChanged;
-        protected virtual void OnCanExecute()
+        public event EventHandler CanExecuteChanged;    
+        public void OnCanExecute()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }

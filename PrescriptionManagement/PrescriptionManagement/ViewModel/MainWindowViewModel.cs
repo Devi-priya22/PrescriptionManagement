@@ -21,18 +21,65 @@ namespace PrescriptionManagement.ViewModel
         public RelayCommand AddCommand { get; set; }
 
 		public RelayCommand DeleteCommand { get; set; }
-		private readonly DatabasesManager _dbManager;
+
+        public RelayCommand SearchCommand { get; set; }
+
+        private readonly DatabasesManager _dbManager;
 		public MainWindowViewModel() 
 		{
 			AddCommand = new RelayCommand(AddFunction);
-			DeleteCommand = new RelayCommand(DeleteFunction);
+			DeleteCommand = new RelayCommand(DeleteFunction,CanDelete);
+			SearchCommand = new RelayCommand(SearchFunction,CanSearchFuction);
 			_dbManager = new DatabasesManager();
 			Patients = new ObservableCollection<Patient>();
-			LoadPatients();
+			LoadPatients();   
 			
 		}
 
-		private void AddFunction()
+        private bool CanSearchFuction()
+        {
+			return !string.IsNullOrWhiteSpace(Search);
+		}
+
+
+        private void SearchFunction()
+		{
+			Patients.Clear();
+            if (!string.IsNullOrWhiteSpace(Search))
+            {
+                var filteredPatients = _dbManager.GetAllPatients()
+                    .Where(p => p.Name.Contains(Search))
+                    .ToList();
+
+                
+                foreach (var patient in filteredPatients)
+                {
+                    Patients.Add(patient);
+                }
+            }
+            else
+            {
+                
+                LoadPatients();
+            }
+        }
+
+        private void DeleteFunction()
+        {
+            if (SelectedItem != null)
+            {
+                _dbManager.DeletePatient(SelectedItem);
+                Patients.Remove(SelectedItem);
+                SelectedItem = null;
+            }
+
+        }
+
+		private bool CanDelete()
+		{
+            return SelectedItem != null;
+        }
+        private void AddFunction()
 		{
 			var patient = new Patient()
 			{
@@ -60,9 +107,16 @@ namespace PrescriptionManagement.ViewModel
 			}
 		}
 
-		private void DeleteFunction()
-		{
 
+		private Patient _selectedItem;
+
+		public Patient SelectedItem
+		{
+			get { return _selectedItem; }
+			set { _selectedItem = value; 
+				OnPropertyChanged();
+				DeleteCommand.OnCanExecute();
+			}
 		}
 
 
@@ -142,6 +196,7 @@ namespace PrescriptionManagement.ViewModel
 			get { return _search; }
 			set { _search = value;
 				OnPropertyChanged();
+				SearchCommand.OnCanExecute();
 			}
 		}
 
