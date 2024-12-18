@@ -21,21 +21,21 @@
             </Grid.ColumnDefinitions>
             <Border Background="Aquamarine">
                 <StackPanel Grid.Column="0" Background="#91AC8F" >
-                    <TextBlock Text="Name"></TextBlock>
-                    <TextBox></TextBox>
+                    <TextBlock Text="Name" ></TextBlock>
+                    <TextBox Style="{StaticResource TxtName}" ></TextBox>
                     <TextBlock Text="Age"></TextBlock>
-                    <TextBox></TextBox>
+                    <TextBox Style="{StaticResource TxtName}" ></TextBox>
                     <TextBlock Text="Gender"></TextBlock>
                     <StackPanel Orientation="Horizontal">
                         <RadioButton Content="Male"></RadioButton>
                         <RadioButton Content="Female" Margin="5,0"></RadioButton>
                     </StackPanel>
                     <DatePicker></DatePicker>
-                    <Button Content="Add"></Button>
+                    <Button Content="Add" Style="{StaticResource AddButton}"></Button>
                 </StackPanel>
             </Border>
             <StackPanel Grid.Column="1" Background="#B2C9AD">
-
+ gw
             </StackPanel>
         </Grid>
     </Grid>
