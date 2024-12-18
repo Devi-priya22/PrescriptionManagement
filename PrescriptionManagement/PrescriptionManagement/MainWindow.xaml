@@ -71,11 +71,11 @@
                 <TextBlock Text="Patient Records" FontSize="16" FontWeight="DemiBold" TextAlignment="Center"></TextBlock>
                 <DataGrid ItemsSource="{Binding Patients}" AutoGenerateColumns="False" Margin="5" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" Width="400">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Id}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Age" Binding="{Binding Age}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Gender" Binding="{Binding Gender}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Date" Binding="{Binding Date}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Age" Binding="{Binding Age}"/>
+                        <DataGridTextColumn Header="Gender" Binding="{Binding Gender}"/>
+                        <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

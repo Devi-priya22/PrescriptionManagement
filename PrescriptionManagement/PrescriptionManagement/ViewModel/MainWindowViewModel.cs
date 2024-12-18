@@ -20,48 +20,54 @@ namespace PrescriptionManagement.ViewModel
         public ObservableCollection<Patient> Patients { get; set; }
         public RelayCommand AddCommand { get; set; }
 
-		public RelayCommand DeleteCommand { get; set; }
+		    public RelayCommand DeleteCommand { get; set; }
 
         public RelayCommand SearchCommand { get; set; }
 
         private readonly DatabasesManager _dbManager;
-		public MainWindowViewModel() 
-		{
-			AddCommand = new RelayCommand(AddFunction);
-			DeleteCommand = new RelayCommand(DeleteFunction,CanDelete);
-			SearchCommand = new RelayCommand(SearchFunction,CanSearchFuction);
-			_dbManager = new DatabasesManager();
-			Patients = new ObservableCollection<Patient>();
-			LoadPatients();   
-			
-		}
+        public MainWindowViewModel() 
+        {
+          AddCommand = new RelayCommand(AddFunction);
+          DeleteCommand = new RelayCommand(DeleteFunction,CanDelete);
+          SearchCommand = new RelayCommand(SearchFunction,CanSearchFuction);
+          _dbManager = new DatabasesManager();
+          Patients = new ObservableCollection<Patient>();
+          LoadPatients();   
+        }
 
+        private bool CanDeletePatient()
+        {
+            throw new NotImplementedException();
+        }
+        
         private bool CanSearchFuction()
         {
-			return !string.IsNullOrWhiteSpace(Search);
-		}
-
+			  return !string.IsNullOrWhiteSpace(Search);
+		    }
 
         private void SearchFunction()
-		{
-			Patients.Clear();
+		    {
+            Patients.Clear();
             if (!string.IsNullOrWhiteSpace(Search))
             {
-                var filteredPatients = _dbManager.GetAllPatients()
-                    .Where(p => p.Name.Contains(Search))
-                    .ToList();
+              var filteredPatients = _dbManager.GetAllPatients()
+                .Where(p => p.Name.Contains(Search))
+                .ToList();
 
-                
-                foreach (var patient in filteredPatients)
-                {
-                    Patients.Add(patient);
-                }
+              foreach (var patient in filteredPatients)
+              {
+                Patients.Add(patient);
+              }
             }
             else
             {
-                
-                LoadPatients();
+              LoadPatients() ;
             }
+		    }
+
+        private bool CanSearchExecute()
+        {
+          return !string.IsNullOrWhiteSpace(Search);
         }
 
         private void DeleteFunction()
@@ -79,6 +85,7 @@ namespace PrescriptionManagement.ViewModel
 		{
             return SelectedItem != null;
         }
+        
         private void AddFunction()
 		{
 			var patient = new Patient()
@@ -199,6 +206,20 @@ namespace PrescriptionManagement.ViewModel
 				SearchCommand.OnCanExecute();
 			}
 		}
+
+		private Patient _selectedPatient;
+
+		public Patient SelectedPatient
+
+		{
+			get { return _selectedPatient; }
+			set
+			{ 
+				_selectedPatient = value;
+				OnPropertyChanged();
+			}
+		}
+
 
 		public string Error { get; } = "Errors";
 
