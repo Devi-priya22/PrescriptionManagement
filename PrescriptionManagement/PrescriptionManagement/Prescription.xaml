@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PrescriptionManagement"
         mc:Ignorable="d"
-        Title="AK Groups" Height="470" Width="800" Background="#66785F" Icon="Assets/Group 2.ico">
+        Title="AK Groups" Height="470" Width="800" Background="#66785F">
     <Grid>
         <!--<Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -75,6 +75,13 @@
             <Label Margin="88,8" Foreground="White">
                 Date
             </Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Background="White"></TextBlock>
+            <TextBlock Background="White"></TextBlock>
+            <TextBlock Background="White"></TextBlock>
+            <TextBlock></TextBlock>
+            <TextBlock></TextBlock>
         </StackPanel>
         <StackPanel Orientation="Vertical">
             <Label Margin="28,90" Foreground="White">Disease</Label>
