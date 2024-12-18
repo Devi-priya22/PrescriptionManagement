@@ -4,38 +4,78 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PrescriptionManagement"
+        xmlns:vm="clr-namespace:PrescriptionManagement.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="AK Groups" Height="450" Width="800" Icon="Asset/Group 2.ico">
+    <Window.DataContext>
+        <vm:MainWindowViewModel></vm:MainWindowViewModel>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Border Background="#4B5945">
-            <TextBlock Grid.Row="0" Text="Dr.Appukuttans Clinic" Margin="10" FontSize="16" FontWeight="ExtraBold" Foreground="#E7FBE6"></TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <Image Height="50" Width="50" Source="Asset/Group 4.png">
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="Asset/Group 4.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <TextBlock Grid.Row="0" Text="Dr.Appukuttans Clinic" Margin="10" FontSize="16" FontWeight="ExtraBold" Foreground="#E7FBE6"></TextBlock>
+                <TextBox Width="250" Height="20" Margin="20,0"></TextBox>
+                <Button Content="Search" Height="20" Width="50" Command="{Binding SearchCommand}"></Button>
+            </StackPanel>
         </Border>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Border Background="Aquamarine">
-                <StackPanel Grid.Column="0" Background="#91AC8F" >
-                    <TextBlock Text="Name" ></TextBlock>
-                    <TextBox Style="{StaticResource TxtName}" ></TextBox>
-                    <TextBlock Text="Age"></TextBlock>
-                    <TextBox Style="{StaticResource TxtName}" ></TextBox>
-                    <TextBlock Text="Gender"></TextBlock>
-                    <StackPanel Orientation="Horizontal">
-                        <RadioButton Content="Male"></RadioButton>
-                        <RadioButton Content="Female" Margin="5,0"></RadioButton>
+            <Border Background="#597445">
+                <StackPanel Grid.Column="0" Background="#91AC8F" Margin="5">
+                    <TextBlock Text="Name" Margin="5"></TextBlock>
+                    <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="200" HorizontalAlignment="Left" Margin="5,0">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <StackPanel>
+                                    <AdornedElementPlaceholder></AdornedElementPlaceholder>
+                                    <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"></TextBlock>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                    </TextBox>
+                    <TextBlock Text="Age" Margin="5,15,0,0"></TextBlock>
+                    <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  Width="200" HorizontalAlignment="Left" Margin="5,0">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <StackPanel>
+                                    <AdornedElementPlaceholder></AdornedElementPlaceholder>
+                                    <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"></TextBlock>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                    </TextBox>
+                    <TextBlock Text="Gender" Margin="5,15,0,0"></TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <RadioButton Content="Male" GroupName="GenderGroup" IsChecked="{Binding IsMale, Mode=TwoWay}"></RadioButton>
+                        <RadioButton Content="Female" GroupName="GenderGroup" IsChecked="{Binding IsFemale, Mode=TwoWay}" Margin="5,0"></RadioButton>
                     </StackPanel>
-                    <DatePicker></DatePicker>
-                    <Button Content="Add" Style="{StaticResource AddButton}"></Button>
+                    <DatePicker Margin="5,0" SelectedDate="{Binding Date, Mode=TwoWay}"></DatePicker>
+                    <Button Content="Add" Style="{StaticResource AddButton}" Command="{Binding AddCommand}"></Button>
                 </StackPanel>
             </Border>
             <StackPanel Grid.Column="1" Background="#B2C9AD">
- gw
+                <TextBlock Text="Patient Records" FontSize="16" FontWeight="DemiBold" TextAlignment="Center"></TextBlock>
+                <DataGrid ItemsSource="{Binding Patients}" AutoGenerateColumns="False"  Margin="5" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Age" Binding="{Binding Age}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Gender" Binding="{Binding Gender}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Date" Binding="{Binding Date}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
         </Grid>
     </Grid>
