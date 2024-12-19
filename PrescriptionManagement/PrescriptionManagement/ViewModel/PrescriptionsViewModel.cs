@@ -14,47 +14,122 @@ namespace PrescriptionManagement.ViewModel
 {
     internal class PrescriptionsViewModel:ViewModelBase
     {
-        private string _medicineName;
-        private string _dosage;
-        private string _usage;
+        
+        
+        private string _disease;
 
-        public ObservableCollection<Medicine> Prescriptions { get; set; }
+        public string Disease
+        {
+            get { return _disease; }
+            set { _disease = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _description;
+
+        public string Description
+        {
+            get { return _description; }
+            set { _description = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _medicineName;
 
         public string MedicineName
         {
-            get => _medicineName;
-            set
-            {
-                _medicineName = value;
+            get { return _medicineName; }
+            set { _medicineName = value;
                 OnPropertyChanged();
             }
         }
+
+
+
+        private string _dosage;
 
         public string Dosage
         {
-            get => _dosage;
-            set
-            {
-                _dosage = value;
+            get { return _dosage; }
+            set { _dosage = value;
                 OnPropertyChanged();
             }
         }
+
+        public bool Before
+        {
+            get => Dosage == "Before";
+            set
+            {
+                if (value) Dosage = "Before";
+                OnPropertyChanged();
+
+            }
+        }
+
+        public bool After
+        {
+            get => Dosage == "After";
+            set
+            {
+                if (value) Dosage = "After";
+                OnPropertyChanged();
+
+            }
+        }
+
+        private string _usage;
 
         public string Usage
         {
-            get => _usage;
-            set
-            {
-                _usage = value;
+            get { return _usage; }
+            set { _usage = value;
                 OnPropertyChanged();
             }
         }
+        public bool One
+        {
+            get => Usage == "1-1-1";
+            set
+            {
+                if (value) Dosage = "1-1-1";
+                OnPropertyChanged();
 
-        public ICommand AddPrescriptionCommand { get; }
+            }
+        }
 
+        public bool Two
+        {
+            get => Usage == "1-0-1";
+            set
+            {
+                if (value) Dosage = "1-0-1";
+                OnPropertyChanged();
+
+            }
+        }
+
+        public bool Three
+        {
+            get => Usage == "1-1-1";
+            set
+            {
+                if (value) Dosage = "1-1-1";
+                OnPropertyChanged();
+
+            }
+        }
+
+        private readonly List<Medicine> _medicines; 
+        public ObservableCollection<Medicine> Prescriptions { get; set; }
+
+        public RelayCommand AddPrescriptionCommand { get; set; }
         public PrescriptionsViewModel()
         {
-            Prescriptions = new ObservableCollection<Medicine>();
+            _medicines = new List<Medicine>();
+            Prescriptions = new ObservableCollection<Medicine>(_medicines);
             AddPrescriptionCommand = new RelayCommand(AddPrescription);
         }
 
@@ -67,7 +142,9 @@ namespace PrescriptionManagement.ViewModel
                 Usage = Usage
             };
 
+            _medicines.Add(newPrescription);
             Prescriptions.Add(newPrescription);
+
             MedicineName = string.Empty;
             Dosage = string.Empty;
             Usage = string.Empty;

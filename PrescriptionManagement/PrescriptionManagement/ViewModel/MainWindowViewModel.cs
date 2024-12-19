@@ -40,7 +40,7 @@ namespace PrescriptionManagement.ViewModel
 
         private void NewExecuted()
 		{
-			new Prescription().Show();
+			new Prescriptions(SelectedItem).ShowDialog();
 		}
 
 		private bool NewCanexecute()
@@ -140,6 +140,7 @@ namespace PrescriptionManagement.ViewModel
 				NewCommand.OnCanExecute();
 			}
 		}
+
 
 
 		private string _name;
