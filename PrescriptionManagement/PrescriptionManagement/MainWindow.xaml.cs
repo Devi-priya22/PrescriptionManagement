@@ -26,5 +26,6 @@ namespace PrescriptionManagement
             InitializeComponent();
             new DatabasesManager();
         }
+
     }
 }
