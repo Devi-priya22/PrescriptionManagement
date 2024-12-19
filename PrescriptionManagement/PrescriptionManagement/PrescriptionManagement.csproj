@@ -74,7 +74,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Prescriptions.cs" />
     <Compile Include="Services\DatabasesManager.cs" />
+    <Compile Include="Services\PrescriptionDatabaseManager.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\PrescriptionViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />

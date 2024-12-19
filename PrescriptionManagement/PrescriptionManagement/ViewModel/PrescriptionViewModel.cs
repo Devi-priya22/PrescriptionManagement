@@ -1,14 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PrescriptionManagement.Commands;
+using PrescriptionManagement.Model;
+using PrescriptionManagement.Services;
 
 namespace PrescriptionManagement.ViewModel
 {
     internal class PrescriptionViewModel: ViewModelBase
     {
-		private string _disease;
+
+        private readonly List<Patient> _patients;
+        public ObservableCollection<Patient> Patients { get; set; }
+
+        public RelayCommand AddCommand { get; set; }
+
+        public RelayCommand DeleteCommand { get; set; }
+
+     
+
+        public PrescriptionViewModel()
+        {
+            AddCommand = new RelayCommand(AddFunction);
+            DeleteCommand = new RelayCommand(DeleteFunction, CanDelete);
+            Patients = new ObservableCollection<Patient>();
+        }
+        private string _disease;
 
 		public string Disease
 		{
@@ -32,8 +53,8 @@ namespace PrescriptionManagement.ViewModel
 			set { _dosage = value; }
 		}
 
-		public bool threetime
-		{
+		public bool IsThree
+        {
 			get => Dosage == "3 times";
             set
             {
@@ -43,7 +64,7 @@ namespace PrescriptionManagement.ViewModel
             }
         }
 
-        public bool twotime
+        public bool IsTwo
         {
             get => Dosage == "2 times";
             set
@@ -54,7 +75,7 @@ namespace PrescriptionManagement.ViewModel
             }
         }
 
-        public bool Onetime
+        public bool IsOne
         {
             get => Dosage == "1 time";
             set
@@ -93,6 +114,7 @@ namespace PrescriptionManagement.ViewModel
 
             }
         }
+
 
 
 
