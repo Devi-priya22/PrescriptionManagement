@@ -26,7 +26,7 @@
                 <TextBox Width="250" Height="20" Margin="20,0" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <Button Content="Search" Height="20" Width="50" Command="{Binding SearchCommand}"></Button>
                 <Button Content="Delete" Height="20" Width="50" Margin="25" Command="{Binding DeleteCommand}" IsEnabled="{Binding SelectedItem}"></Button>
-                <Button Content="Add Prescription" Height="20" IsEnabled="{Binding SelectedItem}"></Button>
+                <Button Content="Add Prescription" Height="20" IsEnabled="{Binding SelectedItem}" Command="{Binding NewCommand}"></Button>
             </StackPanel>
         </Border>
         <Grid Grid.Row="1">

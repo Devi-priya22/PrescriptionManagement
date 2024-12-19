@@ -4,8 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PrescriptionManagement"
+        xmlns:vm="clr-namespace:PrescriptionManagement.ViewModel"
         mc:Ignorable="d"
         Title="AK Groups" Height="470" Width="800" Background="#66785F">
+    <Window.DataContext>
+        <vm:PrescriptionViewModel></vm:PrescriptionViewModel>
+    </Window.DataContext>
     <Grid>
         <!--<Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -59,31 +63,21 @@
                 </Label>
             </StackPanel>
         </Grid>-->
-        <StackPanel Orientation="Horizontal">
-            <Label Margin="80,8" Foreground="White">
-                Name
-            </Label>
-            <Label Margin="2,8" Foreground="White">
-                Age
-            </Label>
-            <Label Margin="88,8" Foreground="White">
-                Gender
-            </Label>
-            <Label Margin="8,8" Foreground="White">
-                Weight
-            </Label>
-            <Label Margin="88,8" Foreground="White">
-                Date
-            </Label>
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10">
+            <Label Foreground="White" Content="Name" />
+            <TextBox Background="#B2C9AD" Text="{Binding SelectedItem.Name}" Margin="5" Height="30" />
+
+            <Label Foreground="White" Content="Age" />
+            <TextBox Background="#B2C9AD" Text="{Binding SelectedItem.Age}" Margin="5" Height="30" />
+
+            <Label Foreground="White" Content="Gender" />
+            <TextBox Background="#B2C9AD" Text="{Binding SelectedItem.Gender}" Margin="5" Height="30" />
+
+            <Label Foreground="White" Content="Date" />
+            <TextBox Background="#B2C9AD" Text="{Binding SelectedItem.Date}" Margin="5" Height="30" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Background="White"></TextBlock>
-            <TextBlock Background="White"></TextBlock>
-            <TextBlock Background="White"></TextBlock>
-            <TextBlock></TextBlock>
-            <TextBlock></TextBlock>
-        </StackPanel>
-        <StackPanel Orientation="Vertical">
+
+        <StackPanel Orientation="Vertical" Margin="10,0,-10,0">
             <Label Margin="28,90" Foreground="White">Disease</Label>
             <TextBox Margin="0,-130,0,0" Height="33" Width="724" Background="#B2C9AD"></TextBox>
             <Label Margin="28,-230,0,-170" Height="33" Foreground="White">Description</Label>
