@@ -26,17 +26,21 @@ namespace PrescriptionManagement.ViewModel
 
         public RelayCommand SearchCommand { get; set; }
 
+		public RelayCommand NewCommand { get; set; }
+
         private readonly DatabasesManager _dbManager;
         public MainWindowViewModel() 
         {
           AddCommand = new RelayCommand(AddFunction);
           DeleteCommand = new RelayCommand(DeleteFunction,CanDelete);
+
           SearchCommand = new RelayCommand(SearchFunction,CanSearchFuction);
 			NewCommand = new RelayCommand(NewExecuted, NewCanexecute);
           _dbManager = new DatabasesManager();
           Patients = new ObservableCollection<Patient>();
           LoadPatients();   
         }
+
 
         private void NewExecuted()
 		{
@@ -52,12 +56,15 @@ namespace PrescriptionManagement.ViewModel
         private bool CanDeletePatient()
         {
             throw new NotImplementedException();
+
         }
-        
-        private bool CanSearchFuction()
-        {
-			  return !string.IsNullOrWhiteSpace(Search);
-		    }
+
+		private bool NewCanExecute()
+		{
+            return SelectedItem != null;
+        }
+
+
 
         private void SearchFunction()
 		    {
