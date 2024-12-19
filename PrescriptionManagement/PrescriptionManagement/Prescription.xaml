@@ -11,98 +11,67 @@
         <vm:PrescriptionViewModel></vm:PrescriptionViewModel>
     </Window.DataContext>
     <Grid>
-        <!--<Grid.RowDefinitions>
+        <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
+        <Border Background="#4B5945">
+            <StackPanel Orientation="Horizontal">
+                <Image Height="50" Width="50" Source="Asset/Group 4.png">
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="Asset/Group 4.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <TextBlock Grid.Row="0" Text="Dr.Appukuttans Clinic" Margin="10" FontSize="16" FontWeight="ExtraBold" Foreground="#E7FBE6"></TextBlock>
+                <Button Content="Delete" Height="20" Width="50" Margin="25" Command="{Binding DeleteCommand}" IsEnabled="{Binding SelectedItem}"></Button>
+            </StackPanel>
+        </Border>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Orientation="Vertical">
-                <Label Margin="5,5">Disease</Label>
-                <TextBox></TextBox>
-                <Label Margin="5,5">Medicine</Label>
-                <ComboBox>
-                    <ComboBoxItem>Paracetamol</ComboBoxItem>
-                    <ComboBoxItem>Meftal</ComboBoxItem>
-                    <ComboBoxItem>Montral</ComboBoxItem>
-                    <ComboBoxItem>Gelusine</ComboBoxItem>
-                    <ComboBoxItem>Derifiline</ComboBoxItem>
-                    <ComboBoxItem>Tusk</ComboBoxItem>
-                </ComboBox>
-                <Label Margin="5,5">Dosage</Label>
-                <ComboBox>
-                    <ComboBoxItem>1-1-1</ComboBoxItem>
-                    <ComboBoxItem>1-0-1</ComboBoxItem>
-                    <ComboBoxItem>0-0-1</ComboBoxItem>
-                </ComboBox>
-                <Label>Before/After</Label>
-                <RadioButton>After</RadioButton>
-                <RadioButton>Before</RadioButton>
-                <Label Margin="5,5">Description</Label>
-                <TextBox></TextBox>
-                <Button>Submit</Button>
+            <Border Background="#597445">
+                <StackPanel Grid.Column="0" Background="#91AC8F" Margin="5">
+                    <TextBlock Text="Disease" Margin="5"></TextBlock>
+                    <TextBox Text="{Binding Disease, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" Margin="5,0">
+                    </TextBox>
+                    <TextBlock Text="Description" Margin="5,15,0,0"></TextBlock>
+                    <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"  Width="200" HorizontalAlignment="Left" Margin="5,0">
+                    </TextBox>
+                    <TextBlock Text="Medicine" Margin="5"></TextBlock>
+                    <ComboBox Margin="5">
+                        <ComboBoxItem>Paracetamol</ComboBoxItem>
+                        <ComboBoxItem>Dolo</ComboBoxItem>
+                        <ComboBoxItem>Citrizine</ComboBoxItem>
+                        <ComboBoxItem>Montral</ComboBoxItem>
+                        <ComboBoxItem>Gelusine</ComboBoxItem>
+                    </ComboBox>
+                    <TextBlock Text="Dosage"></TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <RadioButton Content="1-1-1" GroupName="DosageGroup" IsChecked="{Binding IsThree, Mode=TwoWay}"></RadioButton>
+                        <RadioButton Content="1-0-1" GroupName="DosageGroup" IsChecked="{Binding IsTwo, Mode=TwoWay}" Margin="5,0"></RadioButton>
+                        <RadioButton Content="0-0-1" GroupName="DosageGroup" IsChecked="{Binding IsOne, Mode=TwoWay}" Margin="5,0"></RadioButton>
+                    </StackPanel>
+                    <TextBlock Text="Usage"></TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <RadioButton Content="After" GroupName="TimeGroup" IsChecked="{Binding After, Mode=TwoWay}"></RadioButton>
+                        <RadioButton Content="Before" GroupName="TimeGroup" IsChecked="{Binding Before, Mode=TwoWay}" Margin="5,0"></RadioButton>
+                    </StackPanel>
+                    <Button Content="Add" Style="{StaticResource AddButton}" Command="{Binding AddPrescriptionCommand}"></Button>
+                </StackPanel>
+            </Border>
+            <StackPanel Grid.Column="1" Background="#B2C9AD">
+                <TextBlock FontSize="16" FontWeight="DemiBold" TextAlignment="Center"></TextBlock>
+                <DataGrid ItemsSource="{Binding Prescriptions}" AutoGenerateColumns="False" Margin="5" SelectedItem="{Binding SelectedPrescription, Mode=TwoWay}" Width="400">
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Header="Disease" Binding="{Binding Disease}"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+                        <DataGridTextColumn Header="Dosage" Binding="{Binding Dosage}"/>
+                        <DataGridTextColumn Header="After/Before" Binding="{Binding After/Before}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.ColumnSpan="2">
-                <Label Margin="30,8">
-                    Name
-                </Label>
-                <Label Margin="30,8">
-                    Age
-                </Label>
-                <Label Margin="30,8">
-                    Gender
-                </Label>
-                <Label Margin="30,8">
-                    Weight
-                </Label>
-                <Label Margin="30,8">
-                    Date
-                </Label>
-            </StackPanel>
-        </Grid>-->
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10">
-            <Label Foreground="White" Content="Name" />
-            <TextBox Background="#B2C9AD" Text="{Binding SelectedItem.Name}" Margin="5" Height="30" />
-
-            <Label Foreground="White" Content="Age" />
-            <TextBox Background="#B2C9AD" Text="{Binding SelectedItem.Age}" Margin="5" Height="30" />
-
-            <Label Foreground="White" Content="Gender" />
-            <TextBox Background="#B2C9AD" Text="{Binding SelectedItem.Gender}" Margin="5" Height="30" />
-
-            <Label Foreground="White" Content="Date" />
-            <TextBox Background="#B2C9AD" Text="{Binding SelectedItem.Date}" Margin="5" Height="30" />
-        </StackPanel>
-
-        <StackPanel Orientation="Vertical" Margin="10,0,-10,0">
-            <Label Margin="28,90" Foreground="White">Disease</Label>
-            <TextBox Margin="0,-130,0,0" Height="33" Width="724" Background="#B2C9AD"></TextBox>
-            <Label Margin="28,-230,0,-170" Height="33" Foreground="White">Description</Label>
-            <TextBox Margin="0,-240,0,-250" Height="33" Width="730" Background="#B2C9AD"></TextBox>
-            <Label Margin="28,-290,0,-370" Height="33" Foreground="White">Medicine</Label>
-            <ComboBox Margin="40,60" Height="33" Width="720" Background="#B2C9AD">
-                <ComboBoxItem>Paracetamol</ComboBoxItem>
-                <ComboBoxItem>Meftal</ComboBoxItem>
-                <ComboBoxItem>Montral</ComboBoxItem>
-                <ComboBoxItem>Gelusine</ComboBoxItem>
-                <ComboBoxItem>Derifiline</ComboBoxItem>
-                <ComboBoxItem>Tusk</ComboBoxItem>
-            </ComboBox>
-            <Label Margin="28,-57,0,90" Height="33" Foreground="White">Dosage</Label>
-            <StackPanel Orientation="Horizontal">
-                <RadioButton Margin="38,-130,0,32" Height="33" Foreground="White">1-1-1</RadioButton>
-                <RadioButton Content="1-0-1" Margin="30,-90,0,73" Height="33" Foreground="White"></RadioButton>
-                <RadioButton Content="0-0-1" Margin="30,-90,0,73" Height="33" Foreground="White"></RadioButton>
-            </StackPanel>
-            <Label Margin="28,-85,0,190" Height="33" Foreground="White">After/Before</Label>
-            <StackPanel Orientation="Horizontal">
-                <RadioButton Height="33" Content="Before" Margin="38,-250,0,90" Foreground="White"></RadioButton>
-                <RadioButton Height="33" Content="After" Margin="30,-250,0,90" Foreground="White"></RadioButton>
-            </StackPanel>
-            <Button HorizontalAlignment="Right" Margin="0,-290,40,40" Height="33" Width="60" Style="{StaticResource SubmitButton}" >Save</Button>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Window>
