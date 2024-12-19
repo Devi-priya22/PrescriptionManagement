@@ -22,8 +22,6 @@ namespace PrescriptionManagement.ViewModel
 
 		public RelayCommand DeleteCommand { get; set; }
 
-		public RelayCommand NewCommand { get; set; }
-
         public RelayCommand SearchCommand { get; set; }
 
 		public RelayCommand NewCommand { get; set; }
@@ -34,7 +32,7 @@ namespace PrescriptionManagement.ViewModel
           AddCommand = new RelayCommand(AddFunction);
           DeleteCommand = new RelayCommand(DeleteFunction,CanDelete);
 
-          SearchCommand = new RelayCommand(SearchFunction,CanSearchFuction);
+          SearchCommand = new RelayCommand(SearchFunction,CanSearchExecute);
 			NewCommand = new RelayCommand(NewExecuted, NewCanexecute);
           _dbManager = new DatabasesManager();
           Patients = new ObservableCollection<Patient>();
@@ -44,7 +42,7 @@ namespace PrescriptionManagement.ViewModel
 
         private void NewExecuted()
 		{
-			new Prescriptions(SelectedItem).ShowDialog();
+			new Prescription(SelectedItem).ShowDialog();
 		}
 
 		private bool NewCanexecute()
