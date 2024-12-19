@@ -7,17 +7,17 @@
         xmlns:vm="clr-namespace:PrescriptionManagement.ViewModel"
         
         mc:Ignorable="d"
-        Title="Prescriptions" Height="450" Width="800">
+        Title="Prescriptions" Height="600" Width="800">
     <Window.DataContext>
         <vm:PrescriptionsViewModel></vm:PrescriptionsViewModel>
     </Window.DataContext>
     <Grid Margin="10" Background="#B2C9AD">
         <StackPanel>
 
-            <TextBlock Text="Patient Information" FontWeight="Bold" FontSize="14" Margin="0,0,0,10" />
+            <TextBlock Text="Patient Information" FontWeight="Bold" FontSize="14" Margin="4,0,0,10" />
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,5">
-                <TextBlock Text="Name: " VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBlock Text="Name: " VerticalAlignment="Center" Margin="4,0,10,0"/>
                 <TextBox Name="PatientName" Width="150" Margin="0,0,10,0" />
 
                 <TextBlock Text="Age: " VerticalAlignment="Center" Margin="0,0,10,0"/>
@@ -32,44 +32,58 @@
 
             <TextBlock Text=" Prescription Details" FontWeight="Bold" Margin="0,10"/>
 
-            <TextBlock Text="Disease:"/>
-            <TextBox Name="DiseaseTextBox" Width="300" Margin="0,0,0,10"/>
+            <TextBlock Text="Disease:" Margin="4"/>
+            <TextBox Name="DiseaseTextBox" Width="300" Text="{Binding Disease}" Margin="-280,-18,0,10"/>
 
-            <TextBlock Text="Description:"/>
-            <TextBox Name="DescriptionTextBox" Width="300" Height="60" Margin="0,0,0,10" Text="{Binding Description}"/>
+            <TextBlock Text="Description:" Margin="4"/>
+            <TextBox Text="{Binding Description}" Name="DescriptionTextBox" Width="300" Height="60" Margin="-280,-18,0,10" Text="{Binding Description}"/>
 
-            <TextBlock Text="Medicine Details:" Margin="0,10"/>
+            <TextBlock Text="Medicine Details:" Margin="4,10"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <TextBlock Text="Medicine: " VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <TextBox Name="MedicineTextBox" Width="120" Margin="0,0,10,0"/>
+                <TextBlock Text="Medicine: " VerticalAlignment="Center" Margin="39,0,10,0"/>
+                <TextBox Text="{Binding MedicineName}" Name="MedicineTextBox" Height="33"  Width="120" Margin="4,0,10,0"/>
 
-                <TextBlock Text="Dosage: " VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBlock Text="Dosage: " VerticalAlignment="Center" Margin="60,0,10,0"/>
+                <!--<StackPanel Orientation="Horizontal">-->
+                    <RadioButton Height="33" Content="Before" IsChecked="{Binding Before}" Foreground="White" Margin="-4,28,0,5"></RadioButton>
+                <RadioButton Height="33" Content="After"  IsChecked="{Binding After}" Foreground="White" Margin="7,28,0,5"></RadioButton>
+                <!--</StackPanel>-->
+
+                <TextBlock Text="Usage: " VerticalAlignment="Center" Margin="70,0,10,0"/>
                 <StackPanel Orientation="Horizontal">
-                    <RadioButton Height="33" Content="Before" IsChecked="{Binding Dosage}" Foreground="White"></RadioButton>
-                    <RadioButton Height="33" Content="After"  IsChecked="{Binding Dosage}" Foreground="White"></RadioButton>
+                    <ComboBox x:Name="CmbBox" Width="90" Height="30">
+                        <ComboBoxItem>
+                            After 24 hr
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            After 12 hr
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            After 6 hr
+                        </ComboBoxItem>
+                    </ComboBox>
+                    <!--<RadioButton Content="1-1-1"  Height="33"  IsChecked="{Binding Usage}"  Foreground="White" Margin="-3,28,0,5"></RadioButton>
+                    <RadioButton Content="1-0-1"  Height="33"  IsChecked="{Binding Usage}"  Foreground="White" Margin="9,28,0,5"></RadioButton>
+                    <RadioButton Content="0-0-1"  Height="33"  IsChecked="{Binding Usage}"  Foreground="White" Margin="11,28,0,5"></RadioButton>-->
                 </StackPanel>
-
-                <TextBlock Text="Usage: " VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <StackPanel Orientation="Horizontal">
-                    <RadioButton  Height="33" Foreground="White">1-1-1</RadioButton>
-                    <RadioButton Content="1-0-1"  Height="33"  IsChecked="{Binding Usage}"  Foreground="White"></RadioButton>
-                    <RadioButton Content="0-0-1"  Height="33"  IsChecked="{Binding Usage}"  Foreground="White"></RadioButton>
-                </StackPanel>
-
-                <Button Content="Add" Width="80" Height="30" Margin="10,0,0,0" />
+                
             </StackPanel>
-
-            <TextBlock Text="Added Prescriptions:" FontWeight="Bold" Margin="0,10"/>
+            <Border CornerRadius="15" BorderBrush="#66785F" BorderThickness="1" Width="80" Background="#66785F" Padding="0">
+                <Button Command="{Binding AddPrescriptionCommand}" Content="Add" Padding="10" Width="45" Height="35" Foreground="Black" Background="#66785F"/> 
+            </Border>
+            <TextBlock Text="Added Prescriptions:" FontWeight="Bold" Margin="4,10"/>
             <Border Grid.Column="1">
-                <DataGrid ItemsSource="{Binding Prescriptions}" AutoGenerateColumns="False" CanUserAddRows="False">
+                <DataGrid ItemsSource="{Binding Prescriptions}" AutoGenerateColumns="False" CanUserAddRows="False" SelectionChanged="DataGrid_SelectionChanged" Margin="4,10" HorizontalAlignment="Center">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Medicine" Binding="{Binding Medicine}" />
-                        <DataGridTextColumn Header="Dosage" Binding="{Binding Dosage}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Usage" Binding="{Binding Usage}" />
+                        <DataGridTextColumn Header="Medicine"  Binding="{Binding MedicineName}" Width="260"/>
+                        <DataGridTextColumn Header="Dosage" Binding="{Binding Dosage}" Width="260" />
+                        <DataGridTextColumn Header="Usage" Binding="{Binding Usage}" Width="400" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Border>
-
+            <Border CornerRadius="15" BorderBrush="#66785F" BorderThickness="1" Width="100" Background="#66785F" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15,70">
+                <Button Content="Download" Padding="10" Width="80" Height="35" Foreground="Black" Background="#66785F"/>
+            </Border>
         </StackPanel>
 
     </Grid>

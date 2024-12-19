@@ -40,7 +40,7 @@ namespace PrescriptionManagement.ViewModel
 
         private void NewExecuted()
 		{
-			new Prescription().Show();
+			new Prescriptions().Show();
 		}
 
 		private bool NewCanexecute()
