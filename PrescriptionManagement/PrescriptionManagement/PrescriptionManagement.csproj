@@ -74,10 +74,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Medicine.cs" />
+    <Compile Include="Prescriptions.xaml.cs">
+      <DependentUpon>Prescriptions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Prescriptions.cs" />
     <Compile Include="Services\DatabasesManager.cs" />
     <Compile Include="Services\PrescriptionDatabaseManager.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\PrescriptionsViewModel.cs" />
     <Compile Include="ViewModel\PrescriptionViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
@@ -94,6 +99,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Prescription.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Prescriptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
