@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PrescriptionManagement.Model;
 
 namespace PrescriptionManagement
 {
@@ -19,7 +20,7 @@ namespace PrescriptionManagement
     /// </summary>
     public partial class Prescription : Window
     {
-        public Prescription()
+        public Prescription(Patient patient)
         {
             InitializeComponent();
         }
