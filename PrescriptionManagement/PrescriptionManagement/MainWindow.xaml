@@ -25,6 +25,7 @@
                 <TextBlock Grid.Row="0" Text="Dr.Appukuttans Clinic" Margin="10" FontSize="16" FontWeight="ExtraBold" Foreground="#E7FBE6"></TextBlock>
                 <TextBox Width="250" Height="20" Margin="5,0" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <Button Content="Search" Height="20" Width="50" Command="{Binding SearchCommand}"></Button>
+
                 <Button Content="Delete" Height="20" Width="50" Margin="5,0" Command="{Binding DeleteCommand}" IsEnabled="{Binding SelectedItem}"></Button>
                 <Button Content="Add Prescription" Height="20" IsEnabled="{Binding SelectedItem}" Command="{Binding NewCommand}" Margin="80,0"></Button>
             </StackPanel>
