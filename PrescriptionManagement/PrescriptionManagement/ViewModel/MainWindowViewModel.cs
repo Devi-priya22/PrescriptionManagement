@@ -39,29 +39,16 @@ namespace PrescriptionManagement.ViewModel
           LoadPatients();   
         }
 
-
+        public bool MyProperty => SelectedItem != null;
         private void NewExecuted()
 		{
-			new Prescription(SelectedItem).ShowDialog();
+			new Prescription(SelectedItem.Name).ShowDialog();
 		}
 
 		private bool NewCanexecute()
 		{
             return SelectedItem != null;
         }
-
-
-        private bool CanDeletePatient()
-        {
-            throw new NotImplementedException();
-
-        }
-
-		private bool NewCanExecute()
-		{
-            return SelectedItem != null;
-        }
-
 
 
         private void SearchFunction()
@@ -139,11 +126,12 @@ namespace PrescriptionManagement.ViewModel
 		public Patient SelectedItem
 		{
 			get { return _selectedItem; }
-			set { _selectedItem = value; 
+			set { 
+				_selectedItem = value; 
 				OnPropertyChanged();
 				DeleteCommand.OnCanExecute();
 				NewCommand.OnCanExecute();
-			}
+            }
 		}
 
 

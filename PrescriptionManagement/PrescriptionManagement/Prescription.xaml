@@ -17,16 +17,16 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,5">
                 <TextBlock Text="Name: " VerticalAlignment="Center" Margin="4,0,10,0"/>
-                <TextBox Name="PatientName" Width="150" Margin="0,0,10,0" />
+                <TextBox Name="PatientName" Width="150" Margin="0,0,10,0" Text="{Binding PatientName}" />
 
                 <TextBlock Text="Age: " VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <TextBox Name="PatientAge" Width="50" Margin="0,0,10,0" />
+                <TextBox Name="PatientAge" Width="50" Margin="0,0,10,0" Text="{Binding PatientAge}"/>
 
                 <TextBlock Text="Date: " VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <TextBox Name="DateOfPrescription" Width="100" Margin="0,0,10,0" />
+                <TextBox Name="DateOfPrescription" Width="100" Margin="0,0,10,0" Text="{Binding PatientDate}" />
 
                 <TextBlock Text="Gender: " VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <TextBox Name="PatientGender" Width="80" Margin="0,0,10,0" />
+                <TextBox Name="PatientGender" Width="80" Margin="0,0,10,0" Text="{Binding PatientGender}" />
             </StackPanel>
 
             <TextBlock Text=" Prescription Details" FontWeight="Bold" Margin="0,10"/>
@@ -43,10 +43,10 @@
                 <TextBox Text="{Binding MedicineName}" Name="MedicineTextBox" Height="33"  Width="120" Margin="4,0,10,0"/>
 
                 <TextBlock Text="Dosage: " VerticalAlignment="Center" Margin="60,0,10,0"/>
-                <!--<StackPanel Orientation="Horizontal">-->
+                
                     <RadioButton Height="33" Content="Before" IsChecked="{Binding Before}" Foreground="White" Margin="-4,28,0,5"></RadioButton>
                 <RadioButton Height="33" Content="After"  IsChecked="{Binding After}" Foreground="White" Margin="7,28,0,5"></RadioButton>
-                <!--</StackPanel>-->
+               
 
                 <TextBlock Text="Usage: " VerticalAlignment="Center" Margin="70,0,10,0"/>
                 <StackPanel Orientation="Horizontal">
@@ -61,9 +61,7 @@
                             After 6 hr
                         </ComboBoxItem>
                     </ComboBox>
-                    <!--<RadioButton Content="1-1-1"  Height="33"  IsChecked="{Binding Usage}"  Foreground="White" Margin="-3,28,0,5"></RadioButton>
-                    <RadioButton Content="1-0-1"  Height="33"  IsChecked="{Binding Usage}"  Foreground="White" Margin="9,28,0,5"></RadioButton>
-                    <RadioButton Content="0-0-1"  Height="33"  IsChecked="{Binding Usage}"  Foreground="White" Margin="11,28,0,5"></RadioButton>-->
+                    
                 </StackPanel>
                 
             </StackPanel>

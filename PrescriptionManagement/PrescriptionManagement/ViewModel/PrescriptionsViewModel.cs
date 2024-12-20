@@ -9,13 +9,92 @@ using System.Threading.Tasks;
 using PrescriptionManagement.Commands;
 using System.Windows.Input;
 using PrescriptionManagement.Model;
+using PrescriptionManagement.Services;
 
 namespace PrescriptionManagement.ViewModel
 {
     internal class PrescriptionsViewModel:ViewModelBase
     {
-        
-        
+        private readonly DatabasesManager _dbManager = new DatabasesManager();
+        private Patient _searchPatient;
+
+        public Patient SearchPatient
+        {
+            get { return _searchPatient; }
+            set 
+            {
+                _searchPatient = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _patientName;
+
+        public string PatientName
+        {
+            get { return _patientName; }
+            set
+            {
+                _patientName = value;
+                OnPropertyChanged();
+
+                if (!string.IsNullOrEmpty(PatientName))
+                {
+                    GetSearchPatient();
+                }
+            }
+        }
+
+        private void GetSearchPatient()
+        {
+            var searchPatient = _dbManager.GetPatient(PatientName);
+
+            if (searchPatient != null)
+            {
+                PatientAge = _dbManager.GetPatient(PatientName).Age;
+                PatientGender = searchPatient.Gender;
+                PatientDate = searchPatient.Date;
+            }
+            else
+            {
+                PatientAge = 0;
+                PatientGender = string.Empty;
+                PatientDate = DateTime.Now;
+            }
+        }
+
+        private int _patientAge;
+
+        public int PatientAge
+        {
+            get { return _patientAge; }
+            set { _patientAge = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _patientGender;
+
+        public string PatientGender
+        {
+            get { return _patientGender; }
+            set { _patientGender = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime _patientDate;
+
+        public DateTime PatientDate
+        {
+            get { return _patientDate; }
+            set { _patientDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
         private string _disease;
 
         public string Disease
@@ -153,3 +232,4 @@ namespace PrescriptionManagement.ViewModel
         
     }
 }
+      

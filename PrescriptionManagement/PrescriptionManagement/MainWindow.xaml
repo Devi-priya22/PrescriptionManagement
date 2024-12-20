@@ -4,12 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PrescriptionManagement"
+        xmlns:cv="clr-namespace:PrescriptionManagement.Converter"
+        
         xmlns:vm="clr-namespace:PrescriptionManagement.ViewModel"
         mc:Ignorable="d"
         Title="AK Groups" Height="450" Width="800" Icon="Asset/Group 2.ico">
     <Window.DataContext>
         <vm:MainWindowViewModel></vm:MainWindowViewModel>
     </Window.DataContext>
+
+    <Window.Resources>
+        <cv:Coverterr x:Key="Converterr"></cv:Coverterr>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -26,8 +32,8 @@
                 <TextBox Width="250" Height="20" Margin="5,0" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <Button Content="Search" Height="20" Width="50" Command="{Binding SearchCommand}"></Button>
 
-                <Button Content="Delete" Height="20" Width="50" Margin="5,0" Command="{Binding DeleteCommand}" IsEnabled="{Binding SelectedItem}"></Button>
-                <Button Content="Add Prescription" Height="20" IsEnabled="{Binding SelectedItem}" Command="{Binding NewCommand}" Margin="80,0"></Button>
+                <Button Content="Delete" Height="20" Width="50" Margin="5,0" Command="{Binding DeleteCommand}" IsEnabled="{Binding SelectedItem, Mode=OneWay, Converter={StaticResource Converterr}}"></Button>
+                <Button Content="Add Prescription"  Height="20"  IsEnabled="{Binding SelectedItem, Converter={StaticResource Converterr}, Mode=OneWay}"  Command="{Binding NewCommand}"  Margin="80,0" />
             </StackPanel>
         </Border>
         <Grid Grid.Row="1">
@@ -38,7 +44,7 @@
             <Border Background="#597445">
                 <StackPanel Grid.Column="0" Background="#91AC8F" Margin="5">
                     <TextBlock Text="Name" Margin="5"></TextBlock>
-                    <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="200" HorizontalAlignment="Left" Margin="5,0">
+                    <TextBox Name="Txtname" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="200" HorizontalAlignment="Left" Margin="5,0">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <StackPanel>
@@ -70,7 +76,7 @@
             </Border>
             <StackPanel Grid.Column="1" Background="#B2C9AD">
                 <TextBlock Text="Patient Records" FontSize="16" FontWeight="DemiBold" TextAlignment="Center"></TextBlock>
-                <DataGrid ItemsSource="{Binding Patients}" AutoGenerateColumns="False" Margin="5" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
+                <DataGrid ItemsSource="{Binding Patients}" AutoGenerateColumns="False" Margin="5" SelectedItem="{Binding SelectedItem}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
