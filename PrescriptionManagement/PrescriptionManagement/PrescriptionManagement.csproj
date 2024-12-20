@@ -74,6 +74,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\Coverterr.cs" />
     <Compile Include="Model\Medicine.cs" />
     <Compile Include="Services\DatabasesManager.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

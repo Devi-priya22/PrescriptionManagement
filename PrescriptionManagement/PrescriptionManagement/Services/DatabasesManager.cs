@@ -7,6 +7,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Windows;
 using PrescriptionManagement.Model;
+using System.Xml.Serialization;
 
 namespace PrescriptionManagement.Services
 {
@@ -105,8 +106,38 @@ namespace PrescriptionManagement.Services
                 conn.Close();
             }
         }
-    }
 
+        public Patient GetPatient(string name)
+        {
+            Patient patient = null;
+            var conn = new SQLiteConnection(_connStr);
+            string selectQuery = "select * from Patients where name=@Name limit 1;";
+
+            var cmd = new SQLiteCommand(selectQuery, conn);
+                conn.Open();
+                    cmd.Parameters.AddWithValue("@Name", name);
+                    SQLiteDataReader reader = cmd.ExecuteReader();
+                    {
+                        if (reader.Read())
+                        {
+                            patient = new Patient
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Name = reader["Name"].ToString(),
+                                Age = Convert.ToInt32(reader["Age"]),
+                                Gender = reader["Gender"].ToString(),
+                                Date = DateTime.Parse(reader["Date"].ToString())
+                            };
+                        }
+                    }
+                
+            
+            return patient; 
+
+        }
+        
+
+    }
 }
 
 

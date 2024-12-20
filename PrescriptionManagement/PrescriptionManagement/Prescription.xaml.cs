@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PrescriptionManagement.Model;
+using PrescriptionManagement.ViewModel;
 
 namespace PrescriptionManagement
 {
@@ -20,13 +21,14 @@ namespace PrescriptionManagement
     /// </summary>
     public partial class Prescription : Window
     {
-
-        public Prescription(Patient patient)
+        public Prescription(String name)
         {
             InitializeComponent();
-        }
-
-
-       
+            var vm = (PrescriptionsViewModel)DataContext;
+            if(vm != null)
+            {
+                vm.PatientName = name;
+            }
+        }  
     }
 }
