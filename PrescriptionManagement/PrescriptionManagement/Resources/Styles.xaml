@@ -99,11 +99,10 @@
         <Setter Property="Background" Value="#66785F"></Setter>
         <Setter Property="FontWeight" Value="Bold"></Setter>
     </Style>
-    <x:Array x:Key="Medicines" Type="sys:String">
-        <sys:String>Paracetamol</sys:String>
-        <sys:String>Antibiotic</sys:String>
-        <sys:String>Dolobar</sys:String>
-        <sys:String>xyz</sys:String>
+    <x:Array x:Key="Usage" Type="sys:String">
+        <sys:String>After 24 hrs</sys:String>
+        <sys:String>After 12 hrs</sys:String>
+        <sys:String>After 6 hrs</sys:String>
     </x:Array>
     <Style TargetType="TextBox" x:Key="EnteringValues">
         <Setter Property="Template">

@@ -37,6 +37,7 @@ namespace PrescriptionManagement.ViewModel
           _dbManager = new DatabasesManager();
           Patients = new ObservableCollection<Patient>();
           LoadPatients();   
+
         }
 
         public bool MyProperty => SelectedItem != null;
@@ -49,7 +50,6 @@ namespace PrescriptionManagement.ViewModel
 		{
             return SelectedItem != null;
         }
-
 
         private void SearchFunction()
 		    {
@@ -146,11 +146,10 @@ namespace PrescriptionManagement.ViewModel
 			}
 		}
 
-
 		private int _age;
 
 		[Required (ErrorMessage ="Age could not be null")]
-        [Range(1, 18, ErrorMessage = "It's not a child. Prefer another doctor.")]
+        [Range(1, 18, ErrorMessage = "Age should be below 18")]
         public int Age
         {
             get { return _age; }
@@ -166,7 +165,6 @@ namespace PrescriptionManagement.ViewModel
         }
 
         private string _gender;
-
 		public string Gender
 		{
 			get { return _gender; }

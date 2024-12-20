@@ -31,11 +31,40 @@
                 <TextBlock Grid.Row="0" Text="Dr.Appukuttans Clinic" Margin="10" FontSize="16" FontWeight="ExtraBold" Foreground="#E7FBE6"></TextBlock>
                 <TextBox Width="250" Height="20" Margin="5,0" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <Button Content="Search" Height="20" Width="50" Command="{Binding SearchCommand}"></Button>
-
                 <Button Content="Delete" Height="20" Width="50" Margin="5,0" Command="{Binding DeleteCommand}" IsEnabled="{Binding SelectedItem, Mode=OneWay, Converter={StaticResource Converterr}}"></Button>
                 <Button Content="Add Prescription"  Height="20"  IsEnabled="{Binding SelectedItem, Converter={StaticResource Converterr}, Mode=OneWay}"  Command="{Binding NewCommand}"  Margin="80,0" />
             </StackPanel>
         </Border>
+        <Button Content="Add Prescription" Command="{Binding NewCommand}"  IsEnabled="{Binding SelectedItem}" Width="110" Height="30" Margin="10,0,-650,0">
+            <Button.Template>
+                <ControlTemplate TargetType="Button" >
+                    <Border Background="#B2C9AD" BorderBrush="Gray" BorderThickness="1" CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button Content="Search" Command="{Binding SearchCommand}" Width="60" Height="30" Margin="10,0,-300,0">
+            <Button.Template>
+                <ControlTemplate TargetType="Button" >
+                    <Border Background="#B2C9AD" BorderBrush="Gray" BorderThickness="1" CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+
+        <Button Content="Delete" Command="{Binding DeleteCommand}" Width="60" Height="30" Margin="10,0,-450,0">
+            <Button.Template>
+                <ControlTemplate TargetType="Button" >
+                    <Border Background="#B2C9AD" BorderBrush="Gray" BorderThickness="1" CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>   
                 <ColumnDefinition Width="1*"></ColumnDefinition>

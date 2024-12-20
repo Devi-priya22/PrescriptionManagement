@@ -29,6 +29,6 @@ namespace PrescriptionManagement
             {
                 vm.PatientName = name;
             }
-        }
+        }  
     }
 }
