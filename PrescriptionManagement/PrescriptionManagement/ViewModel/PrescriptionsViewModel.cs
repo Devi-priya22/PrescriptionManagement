@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using PrescriptionManagement.Commands;
-using System.Windows.Input;
-using PrescriptionManagement.Model;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
+using PrescriptionManagement.Commands;
+using PrescriptionManagement.Model;
 using PrescriptionManagement.Services;
 
 namespace PrescriptionManagement.ViewModel
 {
-    internal class PrescriptionsViewModel:ViewModelBase
+    internal class PrescriptionsViewModel : ViewModelBase
     {
         private readonly DatabasesManager _dbManager = new DatabasesManager();
         private Patient _searchPatient;
@@ -24,7 +17,7 @@ namespace PrescriptionManagement.ViewModel
         public Patient SearchPatient
         {
             get { return _searchPatient; }
-            set 
+            set
             {
                 _searchPatient = value;
                 OnPropertyChanged();
@@ -71,7 +64,9 @@ namespace PrescriptionManagement.ViewModel
         public int PatientAge
         {
             get { return _patientAge; }
-            set { _patientAge = value;
+            set
+            {
+                _patientAge = value;
                 OnPropertyChanged();
             }
         }
@@ -81,7 +76,9 @@ namespace PrescriptionManagement.ViewModel
         public string PatientGender
         {
             get { return _patientGender; }
-            set { _patientGender = value;
+            set
+            {
+                _patientGender = value;
                 OnPropertyChanged();
             }
         }
@@ -91,7 +88,9 @@ namespace PrescriptionManagement.ViewModel
         public DateTime PatientDate
         {
             get { return _patientDate; }
-            set { _patientDate = value;
+            set
+            {
+                _patientDate = value;
                 OnPropertyChanged();
             }
         }
@@ -103,7 +102,9 @@ namespace PrescriptionManagement.ViewModel
         public string Disease
         {
             get { return _disease; }
-            set { _disease = value;
+            set
+            {
+                _disease = value;
                 OnPropertyChanged();
             }
         }
@@ -113,7 +114,9 @@ namespace PrescriptionManagement.ViewModel
         public string Description
         {
             get { return _description; }
-            set { _description = value;
+            set
+            {
+                _description = value;
                 OnPropertyChanged();
             }
         }
@@ -123,7 +126,9 @@ namespace PrescriptionManagement.ViewModel
         public string MedicineName
         {
             get { return _medicineName; }
-            set { _medicineName = value;
+            set
+            {
+                _medicineName = value;
                 OnPropertyChanged();
             }
         }
@@ -135,7 +140,9 @@ namespace PrescriptionManagement.ViewModel
         public string Dosage
         {
             get { return _dosage; }
-            set { _dosage = value;
+            set
+            {
+                _dosage = value;
                 OnPropertyChanged();
             }
         }
@@ -181,18 +188,19 @@ namespace PrescriptionManagement.ViewModel
         public string SelectedUsageInternal
         {
             get { return _selectedUsageInternal; }
-            set { _selectedUsageInternal = value;
+            set
+            {
+                _selectedUsageInternal = value;
                 OnPropertyChanged();
             }
         }
 
 
-        private readonly List<Medicine> _medicines; 
+        private readonly List<Medicine> _medicines;
         public ObservableCollection<Medicine> Prescriptions { get; set; }
 
         public RelayCommand AddPrescriptionCommand { get; set; }
         public RelayCommand DownloadPrescription { get; set; }
-        public RelayCommand DeletePrescriptionCommand { get; set; }
 
         public PrescriptionsViewModel()
         {
@@ -200,36 +208,14 @@ namespace PrescriptionManagement.ViewModel
             Prescriptions = new ObservableCollection<Medicine>(_medicines);
             AddPrescriptionCommand = new RelayCommand(AddPrescription);
             DownloadPrescription = new RelayCommand(Download);
-            DeletePrescriptionCommand = new RelayCommand(DeletePrescription, CanDeletePrescription);
 
         }
+
+
 
         
 
-        private void DeletePrescription()
-        {
-            if (SelectedPrescription != null)
-            {
-                _medicines.Remove(SelectedPrescription);
-                Prescriptions.Remove(SelectedPrescription); 
-                SelectedPrescription = null; 
-            }
-        }
-
-        private bool CanDeletePrescription()
-        {
-            return SelectedPrescription != null;
-        }
-
-        private Medicine _selectedPrescription;
-
-        public Medicine SelectedPrescription
-        {
-            get { return _selectedPrescription; }
-            set { _selectedPrescription = value; OnPropertyChanged();
-                DeletePrescriptionCommand.OnCanExecute();
-            }
-        }
+    
 
         private void AddPrescription()
         {
@@ -268,14 +254,13 @@ namespace PrescriptionManagement.ViewModel
                 MessageBox.Show($"Predcription saved successfully at {filePath}",
                     "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show($"An error occured {ex.Message}");
-                    
+
             }
-                    
-            }
+
         }
-        
     }
+
 }

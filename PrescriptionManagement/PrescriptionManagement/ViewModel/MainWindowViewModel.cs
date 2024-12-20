@@ -1,79 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
 using PrescriptionManagement.Commands;
 using PrescriptionManagement.Model;
-using System.Collections.ObjectModel;
 using PrescriptionManagement.Services;
-using System.Windows;
 
 namespace PrescriptionManagement.ViewModel
 {
-    internal class MainWindowViewModel:ViewModelBase, IDataErrorInfo
+    internal class MainWindowViewModel : ViewModelBase, IDataErrorInfo
     {
         private readonly List<Patient> _patients;
         public ObservableCollection<Patient> Patients { get; set; }
         public RelayCommand AddCommand { get; set; }
 
-		public RelayCommand DeleteCommand { get; set; }
+        public RelayCommand DeleteCommand { get; set; }
 
         public RelayCommand SearchCommand { get; set; }
 
-		public RelayCommand NewCommand { get; set; }
+        public RelayCommand NewCommand { get; set; }
 
         private readonly DatabasesManager _dbManager;
-        public MainWindowViewModel() 
+        public MainWindowViewModel()
         {
-          AddCommand = new RelayCommand(AddFunction);
-          DeleteCommand = new RelayCommand(DeleteFunction,CanDelete);
+            AddCommand = new RelayCommand(AddFunction);
+            DeleteCommand = new RelayCommand(DeleteFunction, CanDelete);
 
-          SearchCommand = new RelayCommand(SearchFunction,CanSearchExecute);
-			NewCommand = new RelayCommand(NewExecuted, NewCanexecute);
-          _dbManager = new DatabasesManager();
-          Patients = new ObservableCollection<Patient>();
-          LoadPatients();   
+            SearchCommand = new RelayCommand(SearchFunction, CanSearchExecute);
+            NewCommand = new RelayCommand(NewExecuted, NewCanexecute);
+            _dbManager = new DatabasesManager();
+            Patients = new ObservableCollection<Patient>();
+            LoadPatients();
 
         }
 
         public bool MyProperty => SelectedItem != null;
         private void NewExecuted()
-		{
-			new Prescription(SelectedItem.Name).ShowDialog();
-		}
+        {
+            new Prescription(SelectedItem.Name).ShowDialog();
+        }
 
-		private bool NewCanexecute()
-		{
+        private bool NewCanexecute()
+        {
             return SelectedItem != null;
         }
 
         private void SearchFunction()
-		    {
+        {
             Patients.Clear();
             if (!string.IsNullOrWhiteSpace(Search))
             {
-              var filteredPatients = _dbManager.GetAllPatients()
-                .Where(p => p.Name.Contains(Search))
-                .ToList();
+                var filteredPatients = _dbManager.GetAllPatients()
+                  .Where(p => p.Name.Contains(Search))
+                  .ToList();
 
-              foreach (var patient in filteredPatients)
-              {
-                Patients.Add(patient);
-              }
+                foreach (var patient in filteredPatients)
+                {
+                    Patients.Add(patient);
+                }
             }
             else
             {
-              LoadPatients() ;
+                LoadPatients();
             }
-		    }
+        }
 
         private bool CanSearchExecute()
         {
-          return !string.IsNullOrWhiteSpace(Search);
+            return !string.IsNullOrWhiteSpace(Search);
         }
 
         private void DeleteFunction()
@@ -87,103 +83,108 @@ namespace PrescriptionManagement.ViewModel
 
         }
 
-		private bool CanDelete()
-		{
+        private bool CanDelete()
+        {
             return SelectedItem != null;
         }
-        
+
         private void AddFunction()
-		{
-			var patient = new Patient()
-			{
-				Name = Name,
-				Age = Age,
-				Gender = Gender,
-				Date = Date
-			};
+        {
+            var patient = new Patient()
+            {
+                Name = Name,
+                Age = Age,
+                Gender = Gender,
+                Date = Date
+            };
             _dbManager.AddPatient(patient);
-			Patients.Add(patient);
+            Patients.Add(patient);
 
-			Name=string.Empty;
-			Age = default;
-			Gender=string.Empty;
-			IsMale = false;
-			IsFemale = false;
-			Date= DateTime.Now;
-		}
-		private void LoadPatients()
-		{
-			var patientFromDb = _dbManager.GetAllPatients();
-			foreach (var patient in patientFromDb)
-			{
-				Patients.Add(patient);
-			}
-		}
-
-
-		private Patient _selectedItem;
-
-		public Patient SelectedItem
-		{
-			get { return _selectedItem; }
-			set { 
-				_selectedItem = value; 
-				OnPropertyChanged();
-				DeleteCommand.OnCanExecute();
-				NewCommand.OnCanExecute();
+            Name = string.Empty;
+            Age = default;
+            Gender = string.Empty;
+            IsMale = false;
+            IsFemale = false;
+            Date = DateTime.Now;
+        }
+        private void LoadPatients()
+        {
+            var patientFromDb = _dbManager.GetAllPatients();
+            foreach (var patient in patientFromDb)
+            {
+                Patients.Add(patient);
             }
-		}
+        }
+
+
+        private Patient _selectedItem;
+
+        public Patient SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged();
+                DeleteCommand.OnCanExecute();
+                NewCommand.OnCanExecute();
+            }
+        }
 
 
 
-		private string _name;
-		[Required(ErrorMessage ="Name cannot be null")]
-		public string Name
-		{
-			get { return _name; }
-			set { _name = value; 
-				OnPropertyChanged();
-			}
-		}
+        private string _name;
+        [Required(ErrorMessage = "Name cannot be null")]
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged();
+            }
+        }
 
-		private int _age;
+        private int _age;
 
-		[Required (ErrorMessage ="Age could not be null")]
+        [Required(ErrorMessage = "Age could not be null")]
         [Range(1, 18, ErrorMessage = "Age should be below 18")]
         public int Age
         {
             get { return _age; }
             set
             {
-                if (value <=18 && value>0)
+                if (value <= 18 && value > 0)
                 {
                     _age = value;
                     OnPropertyChanged();
                 }
-				
+
             }
         }
 
         private string _gender;
-		public string Gender
-		{
-			get { return _gender; }
-			set { _gender = value;
-				OnPropertyChanged();
-			}
-		}
-		public bool IsMale
-		{
-			get => Gender == "Male";
-			set
-			{
-				if (value) Gender = "Male";
-				OnPropertyChanged();
+        public string Gender
+        {
+            get { return _gender; }
+            set
+            {
+                _gender = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool IsMale
+        {
+            get => Gender == "Male";
+            set
+            {
+                if (value) Gender = "Male";
+                OnPropertyChanged();
 
-			}
-		}
-		public bool IsFemale
-		{
+            }
+        }
+        public bool IsFemale
+        {
             get => Gender == "Female";
             set
             {
@@ -193,42 +194,46 @@ namespace PrescriptionManagement.ViewModel
             }
         }
 
-		private DateTime _date;
+        private DateTime _date;
 
-		public DateTime Date
-		{
-			get { return _date; }
-			set { _date = value;
-				OnPropertyChanged();
-			}
-		}
+        public DateTime Date
+        {
+            get { return _date; }
+            set
+            {
+                _date = value;
+                OnPropertyChanged();
+            }
+        }
 
-		private string _search;
+        private string _search;
 
-		public string Search
-		{
-			get { return _search; }
-			set { _search = value;
-				OnPropertyChanged();
-				SearchCommand.OnCanExecute();
-			}
-		}
+        public string Search
+        {
+            get { return _search; }
+            set
+            {
+                _search = value;
+                OnPropertyChanged();
+                SearchCommand.OnCanExecute();
+            }
+        }
 
-		private Patient _selectedPatient;
+        private Patient _selectedPatient;
 
-		public Patient SelectedPatient
+        public Patient SelectedPatient
 
-		{
-			get { return _selectedPatient; }
-			set
-			{ 
-				_selectedPatient = value;
-				OnPropertyChanged();
-			}
-		}
+        {
+            get { return _selectedPatient; }
+            set
+            {
+                _selectedPatient = value;
+                OnPropertyChanged();
+            }
+        }
 
 
-		public string Error { get; } = "Errors";
+        public string Error { get; } = "Errors";
 
         public string this[string columnName]
         {

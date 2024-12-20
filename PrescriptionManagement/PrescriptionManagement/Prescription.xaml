@@ -95,9 +95,7 @@
                 </Button.Template>
             </Button>
 
-            <Button Content = "Delete Prescription"
-Command="{Binding DeletePrescriptionCommand}" 
-IsEnabled="{Binding SelectedPrescription}"/>
+         
         </StackPanel>
     </Grid>
 </Window>

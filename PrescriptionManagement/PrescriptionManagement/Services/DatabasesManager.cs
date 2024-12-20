@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.IO;
-using System.Windows;
 using PrescriptionManagement.Model;
-using System.Xml.Serialization;
 
 namespace PrescriptionManagement.Services
 {
@@ -41,27 +36,27 @@ namespace PrescriptionManagement.Services
                 conn.Close();
             }
         }
-            public void AddPatient(Patient patient)
+        public void AddPatient(Patient patient)
+        {
+            using (var conn = new SQLiteConnection(_connStr))
             {
-                using (var conn = new SQLiteConnection(_connStr))
-                {
-                    conn.Open();
+                conn.Open();
 
-                    string insertQuery = @"
+                string insertQuery = @"
                         INSERT INTO Patients (Name, Age, Gender, Date)
                         VALUES (@Name, @Age, @Gender, @Date)";
-                    using (var cmd = new SQLiteCommand(insertQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Name", patient.Name);
-                        cmd.Parameters.AddWithValue("@Age", patient.Age);
-                        cmd.Parameters.AddWithValue("@Gender", patient.Gender);
-                        cmd.Parameters.AddWithValue("@Date", patient.Date.ToString("yyyy-MM-dd"));
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    conn.Close();
+                using (var cmd = new SQLiteCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Name", patient.Name);
+                    cmd.Parameters.AddWithValue("@Age", patient.Age);
+                    cmd.Parameters.AddWithValue("@Gender", patient.Gender);
+                    cmd.Parameters.AddWithValue("@Date", patient.Date.ToString("yyyy-MM-dd"));
+                    cmd.ExecuteNonQuery();
                 }
+
+                conn.Close();
             }
+        }
 
         public List<Patient> GetAllPatients()
         {
@@ -70,9 +65,9 @@ namespace PrescriptionManagement.Services
             {
                 conn.Open();
                 string selectQuery = "select * from Patients;";
-                using(var cmd = new SQLiteCommand(selectQuery, conn))
+                using (var cmd = new SQLiteCommand(selectQuery, conn))
                 {
-                    using(var reader = cmd.ExecuteReader())
+                    using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -114,28 +109,28 @@ namespace PrescriptionManagement.Services
             string selectQuery = "select * from Patients where name=@Name limit 1;";
 
             var cmd = new SQLiteCommand(selectQuery, conn);
-                conn.Open();
-                    cmd.Parameters.AddWithValue("@Name", name);
-                    SQLiteDataReader reader = cmd.ExecuteReader();
+            conn.Open();
+            cmd.Parameters.AddWithValue("@Name", name);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            {
+                if (reader.Read())
+                {
+                    patient = new Patient
                     {
-                        if (reader.Read())
-                        {
-                            patient = new Patient
-                            {
-                                Id = Convert.ToInt32(reader["Id"]),
-                                Name = reader["Name"].ToString(),
-                                Age = Convert.ToInt32(reader["Age"]),
-                                Gender = reader["Gender"].ToString(),
-                                Date = DateTime.Parse(reader["Date"].ToString())
-                            };
-                        }
-                    }
-                
-            
-            return patient; 
+                        Id = Convert.ToInt32(reader["Id"]),
+                        Name = reader["Name"].ToString(),
+                        Age = Convert.ToInt32(reader["Age"]),
+                        Gender = reader["Gender"].ToString(),
+                        Date = DateTime.Parse(reader["Date"].ToString())
+                    };
+                }
+            }
+
+
+            return patient;
 
         }
-        
+
 
     }
 }
@@ -143,5 +138,5 @@ namespace PrescriptionManagement.Services
 
 
 
-    
+
 
