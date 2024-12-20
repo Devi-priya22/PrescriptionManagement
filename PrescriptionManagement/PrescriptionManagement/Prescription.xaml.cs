@@ -20,9 +20,13 @@ namespace PrescriptionManagement
     /// </summary>
     public partial class Prescription : Window
     {
+
         public Prescription(Patient patient)
         {
             InitializeComponent();
         }
+
+
+       
     }
 }

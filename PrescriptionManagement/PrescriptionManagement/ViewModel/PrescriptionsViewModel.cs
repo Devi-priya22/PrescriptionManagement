@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using PrescriptionManagement.Commands;
 using System.Windows.Input;
 using PrescriptionManagement.Model;
+using System.IO;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace PrescriptionManagement.ViewModel
 {
@@ -85,52 +88,68 @@ namespace PrescriptionManagement.ViewModel
         public string Usage
         {
             get { return _usage; }
-            set { _usage = value;
-                OnPropertyChanged();
-            }
-        }
-        public bool One
-        {
-            get => Usage == "1-1-1";
             set
             {
-                if (value) Dosage = "1-1-1";
+                _usage = value;
                 OnPropertyChanged();
-
             }
         }
 
-        public bool Two
+        public ObservableCollection<string> UsageIntervals { get; set; }
+
+        private string _selectedUsageInternal;
+
+        public string SelectedUsageInternal
         {
-            get => Usage == "1-0-1";
-            set
-            {
-                if (value) Dosage = "1-0-1";
+            get { return _selectedUsageInternal; }
+            set { _selectedUsageInternal = value;
                 OnPropertyChanged();
-
             }
         }
 
-        public bool Three
-        {
-            get => Usage == "1-1-1";
-            set
-            {
-                if (value) Dosage = "1-1-1";
-                OnPropertyChanged();
-
-            }
-        }
 
         private readonly List<Medicine> _medicines; 
         public ObservableCollection<Medicine> Prescriptions { get; set; }
 
         public RelayCommand AddPrescriptionCommand { get; set; }
+        public RelayCommand DownloadPrescription { get; set; }
+        public RelayCommand DeletePrescriptionCommand { get; set; }
+
         public PrescriptionsViewModel()
         {
             _medicines = new List<Medicine>();
             Prescriptions = new ObservableCollection<Medicine>(_medicines);
             AddPrescriptionCommand = new RelayCommand(AddPrescription);
+            DownloadPrescription = new RelayCommand(Download);
+            DeletePrescriptionCommand = new RelayCommand(DeletePrescription, CanDeletePrescription);
+
+        }
+
+        
+
+        private void DeletePrescription()
+        {
+            if (SelectedPrescription != null)
+            {
+                _medicines.Remove(SelectedPrescription);
+                Prescriptions.Remove(SelectedPrescription); 
+                SelectedPrescription = null; 
+            }
+        }
+
+        private bool CanDeletePrescription()
+        {
+            return SelectedPrescription != null;
+        }
+
+        private Medicine _selectedPrescription;
+
+        public Medicine SelectedPrescription
+        {
+            get { return _selectedPrescription; }
+            set { _selectedPrescription = value; OnPropertyChanged();
+                DeletePrescriptionCommand.OnCanExecute();
+            }
         }
 
         private void AddPrescription()
@@ -139,7 +158,7 @@ namespace PrescriptionManagement.ViewModel
             {
                 MedicineName = MedicineName,
                 Dosage = Dosage,
-                Usage = Usage
+                Usage = $"{SelectedUsageInternal}"
             };
 
             _medicines.Add(newPrescription);
@@ -147,9 +166,37 @@ namespace PrescriptionManagement.ViewModel
 
             MedicineName = string.Empty;
             Dosage = string.Empty;
-            Usage = string.Empty;
+            //Usage = string.Empty;
+            SelectedUsageInternal = string.Empty;
         }
 
+        private void Download()
+        {
+            try
+            {
+                string fileName = $"Prescription_{DateTime.Now:yyyyMMddHHmmss}.txt";
+                string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), fileName);
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    foreach (var prescription in Prescriptions)
+                    {
+                        writer.WriteLine($"Medicine: {prescription.MedicineName}");
+                        writer.WriteLine($"Dosage:{prescription.Dosage}");
+                        writer.WriteLine($"Usage: {prescription.Usage}");
+                    }
+                }
+
+                MessageBox.Show($"Predcription saved successfully at {filePath}",
+                    "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show($"An error occured {ex.Message}");
+                    
+            }
+                    
+            }
+        }
         
     }
-}
+
